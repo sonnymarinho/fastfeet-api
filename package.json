@@ -4,8 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "dev:server": "ts-node-dev -r tsconfig-paths/register --inspect --transpile-only --respawn --ignore-watch node_modules src/server.ts",
-    "commit": "git-cz"
+    "dev:server": "ts-node-dev -r tsconfig-paths/register --inspect --transpile-only --respawn --ignore-watch node_modules src/server.ts"
   },
   "dependencies": {
     "@types/dotenv": "^8.2.0",

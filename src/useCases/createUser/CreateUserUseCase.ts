@@ -1,6 +1,7 @@
-import { User } from '@entities/User';
-import { IUsersRepository } from '@repositories/IUsersRepository';
-import { ICreateUserDTO } from './ICreateUserDTO';
+import { User } from '@entities/User'
+import { InternalError } from '@errors/InternalError'
+import { IUsersRepository } from '@repositories/IUsersRepository'
+import { ICreateUserDTO } from './ICreateUserDTO'
 
 export class CreateUserUseCase {
   constructor(private usersRepository: IUsersRepository) {}
@@ -11,11 +12,13 @@ export class CreateUserUseCase {
     );
 
     if (userAlreadyExists) {
-      throw new Error('User already exists');
+      throw new InternalError('User already exists', 'bad-request')
     }
 
     const user = new User(data);
 
-    await this.usersRepository.save(user);
+    await this.usersRepository.create(user)
+
+    return user
   }
 }

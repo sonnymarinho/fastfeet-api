@@ -33,6 +33,7 @@
       "new-cap": "off",
       "prettier/prettier": "error",
       "object-curly-spacing": "off",
-      "indent": ["error", 2]
+      "indent": ["error", 2],
+      "max-len": "off"
     }
 }

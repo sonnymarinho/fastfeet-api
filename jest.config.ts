@@ -1,5 +1,5 @@
-const { compilerOptions } = require('./tsconfig.json');
-const { pathsToModuleNameMapper } = require('ts-jest/utils');
+const { compilerOptions } = require('./tsconfig.json')
+const { pathsToModuleNameMapper } = require('ts-jest/utils')
 
 /*
  * For a detailed explanation regarding each configuration property and type check, visit:
@@ -196,4 +196,4 @@ export default {
 
   // Whether to use watchman for file crawling
   // watchman: true,
-};
+}

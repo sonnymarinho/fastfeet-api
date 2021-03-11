@@ -1,11 +1,11 @@
 import { User } from '@entities/User'
 import { IUsersRepository } from '@repositories/IUsersRepository'
 
-class UsersRepository implements IUsersRepository {
-  private users: User[] = []
+class FakeUsersRepository implements IUsersRepository {
+  private static users: User[] = []
 
   public async findByEmail(email: string): Promise<User | (null | undefined)> {
-    const user = this.users.find((user) => {
+    const user = FakeUsersRepository.users.find((user) => {
       return user.email === email
     })
 
@@ -14,10 +14,14 @@ class UsersRepository implements IUsersRepository {
 
   public async create(user: User): Promise<User> {
     const createdUser = new User(user)
-    this.users.push(createdUser)
+    FakeUsersRepository.users.push(createdUser)
 
     return createdUser
   }
+
+  public static async truncate(): Promise<void> {
+    FakeUsersRepository.users = []
+  }
 }
 
-export { UsersRepository }
+export { FakeUsersRepository }

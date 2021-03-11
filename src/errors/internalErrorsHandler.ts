@@ -1,10 +1,11 @@
-import { Request, Response } from 'express'
+import { Request, Response, NextFunction } from 'express'
 import { InternalError } from '@errors/InternalError'
 
 const internalErrorsHandler = (
   error: Error,
   request: Request,
-  response: Response
+  response: Response,
+  _: NextFunction
 ) => {
   if (error instanceof InternalError) {
     return response

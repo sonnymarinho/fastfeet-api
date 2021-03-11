@@ -4,6 +4,7 @@ interface IUserProps {
   id?: string
   name: string
   email: string
+  cpf: string
   password: string
   deliveryman: boolean
 }
@@ -12,6 +13,7 @@ export class User {
 
   public name!: string
   public email!: string
+  public cpf!: string
   public password!: string
   public deliveryman!: boolean
 

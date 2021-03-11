@@ -5,11 +5,12 @@ class CreateUserController {
   constructor(private createUserUseCase: CreateUserUseCase) {}
 
   public async handle(request: Request, response: Response): Promise<Response> {
-    const { name, email, password, deliveryman } = request.body
+    const { name, email, password, cpf, deliveryman } = request.body
 
     const user = await this.createUserUseCase.execute({
       name: name,
       email,
+      cpf,
       password,
       deliveryman,
     })

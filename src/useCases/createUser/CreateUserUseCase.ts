@@ -11,7 +11,7 @@ export class CreateUserUseCase {
   ) {}
 
   public async execute(data: ICreateUserDTO) {
-    const { name, email, password, deliveryman } = data
+    const { name, email, cpf, password, deliveryman } = data
 
     const userAlreadyExists = await this.usersRepository.findByEmail(data.email)
 
@@ -31,6 +31,7 @@ export class CreateUserUseCase {
     const user = new User({
       name,
       email,
+      cpf,
       password: hashedPassword,
       deliveryman,
     })

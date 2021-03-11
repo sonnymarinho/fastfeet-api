@@ -11,6 +11,7 @@ router.post(
     [Segments.BODY]: {
       name: Joi.string().required(),
       email: Joi.string().email().required(),
+      cpf: Joi.string().length(14).required(),
       password: Joi.string().required(),
       deliveryman: Joi.boolean().required(),
     },

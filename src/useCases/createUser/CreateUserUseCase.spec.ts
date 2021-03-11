@@ -1,47 +1,98 @@
-import { User } from '@entities/User'
+import { app } from '../../app'
+import request from 'supertest'
 import { InternalError } from '@errors/InternalError'
-import { UsersRepository } from '@repositories/implementations/fakes/UsersRepository'
-import { v4 } from 'uuid'
+import { FakeUsersRepository } from '@repositories/implementations/fakes/FakeUsersRepository'
+import { FakeHashProvider } from '@providers/HashProvider/implementations/fakes/FakeHashProvider'
 import { CreateUserUseCase } from './CreateUserUseCase'
 
 describe('CreateUserUseCase', () => {
-  let fakeUsersRepository: UsersRepository
-
   beforeEach(() => {
-    fakeUsersRepository = new UsersRepository()
+    FakeUsersRepository.truncate()
   })
 
-  it('should be able to create a new user', async () => {
-    const createUserUseCase = new CreateUserUseCase(fakeUsersRepository)
+  describe('Unitary Tests', () => {
+    let fakeUsersRepository: FakeUsersRepository
+    let fakeHashProvider: FakeHashProvider
 
-    const user = await createUserUseCase.execute({
-      name: 'John Doe',
-      email: 'john.doe@domain.com',
-      password: '123',
+    beforeEach(() => {
+      fakeUsersRepository = new FakeUsersRepository()
+      fakeHashProvider = new FakeHashProvider()
     })
 
-    expect(user instanceof User).toBe(true)
-    expect(user.name).toBe('John Doe')
-  })
+    it('should be able to create a new user', async () => {
+      const createUserUseCase = new CreateUserUseCase(
+        fakeUsersRepository,
+        fakeHashProvider
+      )
 
-  it('should not to be able to create a new user with an existent email', async () => {
-    expect.assertions(1)
-
-    const createUserUseCase = new CreateUserUseCase(fakeUsersRepository)
-
-    await fakeUsersRepository.create({
-      id: v4(),
-      name: 'John Doe',
-      email: 'john.doe@domain.com',
-      password: '123',
-    })
-
-    await expect(
-      createUserUseCase.execute({
+      const user = await createUserUseCase.execute({
         name: 'John Doe',
         email: 'john.doe@domain.com',
         password: '123',
+        deliveryman: true,
       })
-    ).rejects.toBeInstanceOf(InternalError || Error)
+
+      expect(user.name).toBe('John Doe')
+    })
+
+    it('should not to be able to create a new user with an existent email', async () => {
+      expect.assertions(1)
+
+      const createUserUseCase = new CreateUserUseCase(
+        fakeUsersRepository,
+        fakeHashProvider
+      )
+
+      await createUserUseCase.execute({
+        name: 'John Doe',
+        email: 'john.doe@domain.com',
+        password: '123',
+        deliveryman: true,
+      })
+
+      await expect(
+        createUserUseCase.execute({
+          name: 'John Doe',
+          email: 'john.doe@domain.com',
+          password: '123',
+          deliveryman: true,
+        })
+      ).rejects.toBeInstanceOf(InternalError || Error)
+    })
+  })
+
+  describe('Integration Test', () => {
+    it('should be able to create a new user', async (done) => {
+      const response = await request(app).post('/users').send({
+        name: 'Joana Doe',
+        email: 'joana32147@domain.com',
+        password: '123456',
+        deliveryman: true,
+      })
+
+      expect(response.status).toBe(201)
+
+      done()
+    })
+
+    it('should not to be able to create a new user with an existent email', async (done) => {
+      await request(app).post('/users').send({
+        name: 'Joana Doe',
+        email: 'joana32147@domain.com',
+        password: '123456',
+        deliveryman: true,
+      })
+
+      const response = await request(app).post('/users').send({
+        name: 'Joana Doe',
+        email: 'joana32147@domain.com',
+        password: '123456',
+        deliveryman: true,
+      })
+
+      expect(response.status).toBe(400)
+
+      done()
+    })
   })
 })

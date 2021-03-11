@@ -12,6 +12,10 @@ const STATUS_CODE = {
     code: 500,
     title: 'Internal Server Error',
   },
+  unauthorized: {
+    code: 401,
+    title: 'Unauthorized',
+  },
 }
 
 class InternalError {

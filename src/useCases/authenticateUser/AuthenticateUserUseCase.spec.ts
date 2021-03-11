@@ -35,6 +35,7 @@ describe('AuthenticateUserUseCase', () => {
       const createdUser = new User({
         name: 'John Doe',
         email: 'john.doe@domain.com',
+        cpf: '077.651.720-18',
         password: await fakeHashProvider.generateHash('123'),
         deliveryman: true,
       })
@@ -54,6 +55,7 @@ describe('AuthenticateUserUseCase', () => {
       const createdUser = new User({
         name: 'John Doe',
         email: 'john.doe@domain.com',
+        cpf: '077.651.720-18',
         password: await fakeHashProvider.generateHash('123'),
         deliveryman: true,
       })
@@ -93,6 +95,7 @@ describe('AuthenticateUserUseCase', () => {
       const createdUser = new User({
         name: 'John Doe',
         email: 'john.doe@domain.com',
+        cpf: '077.651.720-18',
         password: await fakeHashProvider.generateHash('123'),
         deliveryman: true,
       })
@@ -105,6 +108,7 @@ describe('AuthenticateUserUseCase', () => {
       })
 
       expect(response.body.user.id).toBe(createdUser.id)
+      expect(response.body.token.length).toBe(188)
 
       done()
     })
@@ -113,6 +117,7 @@ describe('AuthenticateUserUseCase', () => {
       const createdUser = new User({
         name: 'John Doe',
         email: 'john.doe@domain.com',
+        cpf: '077.651.720-18',
         password: await fakeHashProvider.generateHash('123'),
         deliveryman: true,
       })

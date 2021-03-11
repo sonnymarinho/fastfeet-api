@@ -28,6 +28,7 @@ describe('CreateUserUseCase', () => {
       const user = await createUserUseCase.execute({
         name: 'John Doe',
         email: 'john.doe@domain.com',
+        cpf: '077.651.720-18',
         password: '123',
         deliveryman: true,
       })
@@ -46,6 +47,7 @@ describe('CreateUserUseCase', () => {
       await createUserUseCase.execute({
         name: 'John Doe',
         email: 'john.doe@domain.com',
+        cpf: '077.651.720-18',
         password: '123',
         deliveryman: true,
       })
@@ -54,6 +56,7 @@ describe('CreateUserUseCase', () => {
         createUserUseCase.execute({
           name: 'John Doe',
           email: 'john.doe@domain.com',
+          cpf: '077.651.720-18',
           password: '123',
           deliveryman: true,
         })
@@ -66,6 +69,7 @@ describe('CreateUserUseCase', () => {
       const response = await request(app).post('/users').send({
         name: 'Joana Doe',
         email: 'joana32147@domain.com',
+        cpf: '077.651.720-18',
         password: '123456',
         deliveryman: true,
       })
@@ -79,6 +83,7 @@ describe('CreateUserUseCase', () => {
       await request(app).post('/users').send({
         name: 'Joana Doe',
         email: 'joana32147@domain.com',
+        cpf: '077.651.720-18',
         password: '123456',
         deliveryman: true,
       })
@@ -86,6 +91,29 @@ describe('CreateUserUseCase', () => {
       const response = await request(app).post('/users').send({
         name: 'Joana Doe',
         email: 'joana32147@domain.com',
+        cpf: '077.651.720-18',
+        password: '123456',
+        deliveryman: true,
+      })
+
+      expect(response.status).toBe(400)
+
+      done()
+    })
+
+    it('should not to be able to create a new user with an existent email', async (done) => {
+      await request(app).post('/users').send({
+        name: 'Joana Doe',
+        email: 'joana32147@domain.com',
+        cpf: '077.651.720-18',
+        password: '123456',
+        deliveryman: true,
+      })
+
+      const response = await request(app).post('/users').send({
+        name: 'Joana Doe',
+        email: 'joana32147@domain.com',
+        cpf: '077.651.720-18',
         password: '123456',
         deliveryman: true,
       })

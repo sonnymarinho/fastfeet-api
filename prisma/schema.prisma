@@ -15,7 +15,7 @@ model users {
   name  String
   email  String       @unique
   password String
-  deliveryman Boolean @default(true)
+  deliveryman Boolean
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
 }

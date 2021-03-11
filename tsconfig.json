@@ -15,7 +15,8 @@
       "@useCases/*":["useCases/*"],
       "@repositories/*":["repositories/*"],
       "@entities/*":["entities/*"],
-      "@providers/*":["providers/*"]
+      "@providers/*":["providers/*"],
+      "@config/*":["config/*"]
     },
     "experimentalDecorators": true,
     "sourceMap": true,

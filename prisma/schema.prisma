@@ -14,6 +14,7 @@ model users {
   id    String        @id @default(uuid())
   name  String
   email  String       @unique
+  cpf  String       @unique
   password String
   deliveryman Boolean
   created_at DateTime @default(now())
